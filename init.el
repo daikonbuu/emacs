@@ -1,16 +1,7 @@
-(coding-system-put 'utf-8-unix 'category 'utf-8-unix)
-(set-language-info
-"Japanese"
-'coding-priority (cons 'utf-8-unix
-(get-language-info "Japanese" 'coding-priority)))
-(set-language-environment "Japanese")
-(set-default-coding-systems 'utf-8-unix)
-(set-terminal-coding-system 'utf-8-unix)
-(set-keyboard-coding-system 'utf-8-unix)
-(set-buffer-file-coding-system 'utf-8-unix)
-(setq buffer-file-coding-system 'utf-8-unix)
-(setq ns-command-modifier (quote meta))
-(setq ns-alternate-modifier (quote super))
+; 言語を日本語にする
+(set-language-environment 'Japanese)
+; 極力UTF-8とする
+(prefer-coding-system 'utf-8)
 
 (require 'ucs-normalize)
 
@@ -19,12 +10,26 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-
+(setq ns-command-modifier (quote meta))
+(setq ns-alternate-modifier (quote super))
 ;;; バックアップファイルを作らない
 (setq backup-inhibited t)
 
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
+
+;; バックアップファイルの置き場所を指定する
+(setq make-backup-files t)
+(setq backup-directory-alist
+      (cons (cons "\\.*$" (expand-file-name "~/bak"))
+            backup-directory-alist))
+
+;; メニューバーにファイルパスを表示する
+(setq frame-title-format
+      (format "%%f - Emacs@%s" (system-name)))
+
+;; 背景を透過に設定
+(set-frame-parameter nil 'alpha 85)
 
 ;;; 履歴数を大きくする
 (setq history-length 10000)
